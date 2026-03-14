@@ -1,0 +1,10 @@
+{
+  "condition": "pop100_t5",
+  "n_runs": 5,
+  "best_of_run_mean": 18.4,
+  "best_of_run_std": 2.4083189157584592,
+  "final_best_mean": 18.4,
+  "final_best_std": 2.4083189157584592,
+  "ideal_found_fraction": 0.0,
+  "first_ideal_generation_mean": null
+}

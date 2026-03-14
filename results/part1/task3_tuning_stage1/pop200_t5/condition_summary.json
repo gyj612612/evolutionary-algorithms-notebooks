@@ -1,0 +1,10 @@
+{
+  "condition": "pop200_t5",
+  "n_runs": 5,
+  "best_of_run_mean": 22.6,
+  "best_of_run_std": 2.0736441353327724,
+  "final_best_mean": 22.6,
+  "final_best_std": 2.0736441353327724,
+  "ideal_found_fraction": 0.0,
+  "first_ideal_generation_mean": null
+}

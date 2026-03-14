@@ -1,0 +1,11 @@
+condition,run,seed,final_best_fitness,final_mean_fitness,best_of_run_fitness,ideal_found,first_ideal_generation
+4bit_L10_soft15max,0,20100,15.0,14.9775,15.0,1,24
+4bit_L10_soft15max,1,20101,15.0,14.959000000000001,15.0,1,21
+4bit_L10_soft15max,2,20102,15.0,14.9895,15.0,1,24
+4bit_L10_soft15max,3,20103,15.0,14.9815,15.0,1,26
+4bit_L10_soft15max,4,20104,15.0,14.984499999999999,15.0,1,24
+4bit_L10_soft15max,5,20105,15.0,14.994499999999999,15.0,1,25
+4bit_L10_soft15max,6,20106,15.0,14.9635,15.0,1,25
+4bit_L10_soft15max,7,20107,15.0,14.97,15.0,1,25
+4bit_L10_soft15max,8,20108,15.0,14.9725,15.0,1,20
+4bit_L10_soft15max,9,20109,15.0,14.995,15.0,1,21

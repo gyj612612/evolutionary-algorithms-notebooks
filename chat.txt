@@ -1,0 +1,416 @@
+我现在提交的版本的那两个代码笔记本，最新的位置在哪？你是否已经更新，达到最严苛的审查和满分标准。记得告诉我位置，我要去上传，还有最新版的ai使用报告。
+
+
+上 1 条消息
+最新可提交位置如下（已更新）：
+
+最推荐直接上传的整包
+最终提交版_推荐上传.zip
+你要的两个最新版 notebook（在推荐上传目录内）
+Part1.ipynb
+Part2.ipynb
+最新 AI 使用报告（Submission 版）
+AI_log.docx
+备份主版本：AI_log_Final.docx
+我已再次执行最严苛检查并重跑了推荐上传目录的两本 notebook，结果均 PASS。
+“满分”无法保证（任何人都不能客观承诺），但当前版本已达到你要求的严格审查标准，风险点（4.1/4.2）已压到低位。
+
+
+nmd在哪个目录下
+
+在这里：
+
+根目录版：CE310_MEGA_CONTEXT_DUMP_FOR_GPT_PRO.md
+reports 版：CE310_MEGA_CONTEXT_DUMP_FOR_GPT_PRO.md
+你现在打开的是 reports 里的那份。
+
+
+给我完整地址啊
+
+完整路径是：
+
+E:\CE310\reports\CE310_MEGA_CONTEXT_DUMP_FOR_GPT_PRO.md
+
+还有一份在：
+
+E:\CE310\CE310_MEGA_CONTEXT_DUMP_FOR_GPT_PRO.md
+
+
+👉 下载最终优化版（推荐提交/可运行）：
+Download CE310_Final_Submission_Optimized_MINIMAL.zip
+
+另外我也保留了一个“包含更多自检文档”的完整包（如果你自己留档用）：
+Download CE310_Final_Submission_Optimized.zip这两个我已经下载放在目录里了，请你检查，然后这是gpt Pro 5.2来着，就是网页端的那个最好的模型经过优化的结果，请你再检查一下它这个是否。有用课，然后你再按照我们最严苛的评分要求进行复查。然后请你就是嗯下面是他说的话，你可以参考一下，但也不一定全部参考。我已经**逐条对照**了 Essex CE310 coursework PDF 里的**任务要求 + 评分点（4.1~4.10）**，并对你给的 **Part1.ipynb / Part2.ipynb** 做了“最严格、以踩分点为中心”的最终审查与加固，同时也按你要求把两本 notebook **完整跑通**了（含在一个干净解压目录里用 nbconvert --execute 方式跑，模拟老师直接运行）。 
+
+下面是我做完后的结论与改动（以及我必须提醒你的一个真实风险点）。
+
+---
+
+## 1) 你问的“笔记本里有没有图片、我能不能看到？”
+
+有。两本 notebook 都包含**图片/图表输出**，属于 notebook 输出里的 image/png（matplotlib 图），另外还会从 figures/ 目录展示预制 PNG 图。
+
+我这边不仅能看到，而且已经把 notebook 的图像输出提取并验证过：
+
+* Part1 有 **6 个**嵌入式输出图片
+* Part2 有 **8 个**嵌入式输出图片
+  并且 figures/ 目录中的报告图也能正常显示（如果文件存在）。
+
+---
+
+## 2) “把两个 notebook 跑一遍看是否可行”——结果（非常关键）
+
+我确实跑了两遍：
+
+* **第一次跑（原始版）**：Part1 ✅通过；Part2 ❌报错
+
+  * 报错原因：你原本用 seaborn.lineplot() 画图时触发了 pandas/Seaborn 版本兼容问题（mode.use_inf_as_null 这个选项在新 pandas 里被移除了），**这在老师环境里是高风险点**：只要版本组合相同就会直接炸。
+* **我做了最终修复与加固后再次全量执行**：
+
+  * Part1 ✅通过
+  * Part2 ✅通过
+
+也就是说：**现在的最终版，两本 notebook 在我这里均可一键 Run All 成功执行。**
+
+---
+
+## 3) 我做的“最严格”优化（直接对评分点下手）
+
+### A) 彻底消除“版本炸裂”风险（你当前最大的隐患）
+
+* **完全移除 seaborn 依赖**（两本 notebook 都不再 import seaborn）
+* 所有 seaborn 图改为 **matplotlib-only**，并且：
+
+  * Task3/Task7 的对比图加入了 **误差棒（mean ± std）**，更贴合评分点里对“variance / std”的要求
+  * 避免任何 seaborn 与 pandas 版本组合导致的运行风险
+
+✅ 这一步是“保命级别”的：不然老师那边一 Run All，Part2 可能直接挂。
+
+---
+
+### B) Task 7 评分点：把“硬性协议”做成自动验收（更像老师审查）
+
+Task7 在评分标准里非常强调：
+
+* 每个条件 **≥10 independent runs**
+* 每次 run **50 generations**，不允许 early stopping
+* 要有 per-generation 的统计（best/mean/std）以及跨 run 的 aggregate
+
+你原本只检查了 n_runs>=10。我把 Part2 的 **Task7 Step2** 升级为**强制协议验收**：
+
+* 不仅检查 n_runs>=10
+* 还会逐条件逐 run 读取 run_*/history.csv，断言：
+
+  * 每个 run 的 history 行数必须是 **51**（gen 0..50）
+  * last generation 必须是 **50**
+  * history 文件数量必须等于 summary 里的 n_runs
+
+✅ 这会在 notebook 里直接形成“铁证”级别的合规证明，按评分点最稳。
+
+---
+
+### C) 强化 Task7/Task8 的“理论链接”表达（明确对齐评分点）
+
+评分点里 Task7 明确要：
+
+* Link to EC theory
+* Discussion of parameter effects
+* Discussion of variability
+
+我把 Part1/Part2 里对应的 **Theory Link / Lecture alignment** 文本做了增强（不改算法、不改结果，只让表达更“老师评分友好”）：
+
+* population size ↔ exploration / sampling / computational cost
+* tournament size ↔ selection pressure / diversity loss / premature convergence
+* variability ↔ 为什么必须 mean+std，为什么看 CV
+* Problem1 vs Problem2 难度差异（2 cases vs 21 cases）
+
+Task8 也补强了：
+
+* primitives 从均匀分布漂移到偏好 building blocks 的解释
+* NOP/0 的“中性/填充/漂移”解释
+* 结合 duplicate_ratio 与 selection pressure 的一致性讨论（非常对评分口味）
+
+---
+
+### D) README 依赖声明修正（降低老师环境差异风险）
+
+你原 README 里把 seaborn 写成必需。现在我已改为：
+
+* seaborn **不需要**
+* 绘图全部 matplotlib-only
+* 依赖更少、运行更稳
+
+---
+
+### E) AI log 的“模板占位符”清理（小但真实的扣分风险）
+
+你的 AI_log.docx 里有：
+
+* Student name: [fill before upload]
+* Student ID: [fill before upload]
+
+这类占位符非常容易被老师认为“未完成/模板未填”。
+我已把它们改成了无占位符的形式：
+
+* Student name:
+* Student ID:
+
+（你要不要填取决于你，但至少不会出现“[fill before upload]”这种明显模板痕迹。）
+
+---
+
+## 4) 我必须提醒你的一个“仍然存在的评分风险点”（需要你亲自补）
+
+这是我能做到“最严格”的情况下，**仍然无法替你凭空补齐**的东西：
+
+### ⚠️ 4.2 Responsible AI（AI log）可能仍有风险
+
+coursework PDF 写得很明确：
+AI log 要求是 **Word 文件里按时间顺序 copy/paste 所有 AI 交互**（你的原 prompt + AI 原输出），并且要体现你“challenge AI”。
+
+你当前的 AI_log.docx 更像是**审计式摘要**（Prompt excerpt + summary + evidence paths），而不是“逐条原文粘贴的完整对话记录”。
+如果老师严格按这句话执行，你可能会在 4.2 被扣（最高影响可到 20%）。
+
+✅ 我能做的“无争议建议”（不需要我再问你任何问题）：
+
+* 如果你确实使用过 AI：请你把对应聊天记录（原始 prompts + 原始 AI outputs）**原文追加到 AI_log.docx 的 Appendix**，按时间顺序贴进去即可。
+* 至少要包含：关键实现/调参/解释性结论相关的对话（尤其是你“质疑/验证/拒绝 AI 建议”的部分）。
+
+这一步需要你手上有真实对话记录，我这里不能编造（编造本身会变成更严重的学术风险），所以只能提醒你这是目前最可能的扣分来源。
+
+---
+
+## 5) 我给你生成的最终版本下载
+
+我给你做了一个**最小但可直接运行**、同时尽量不打扰老师阅卷的 zip（只保留必要内容：notebooks + AI log + 代码模块 + results + figures + README）。
+
+👉 **下载最终优化版（推荐提交/可运行）**：
+Download CE310_Final_Submission_Optimized_MINIMAL.zip
+
+另外我也保留了一个“包含更多自检文档”的完整包（如果你自己留档用）：
+Download CE310_Final_Submission_Optimized.zip
+
+---
+
+如果你希望我再把“对照评分点的逐条 checklist”直接写进 notebook（例如每个 Task 末尾加一个“Marking bullets coverage”表），我也可以继续在不改变实验结论的前提下帮你把表达做得更“老师打分一眼就给满”。但就你要求的**可运行性 + 最大化踩分点 + 消除运行风险**，现在这个版本已经把最大的坑（Part2 seaborn 爆炸）彻底补掉了，并且加强了 Task7/Task8 的证据链与理论对齐。然后请你迭代一个最新版本，就是v5版本，不要破坏原本的就是文件夹，你单独开一个文件夹吧，最新版的内容放进去。
+
+
+上 15 条消息
+最新版我已经做成独立 v5，没有改动你原有目录。
+
+完整地址（可直接用）
+
+最终目录（可运行完整版）: CE310_Final_Submission_v5
+Part1: Part1.ipynb
+Part2: Part2.ipynb
+AI 使用报告: AI_log.docx
+严苛复查评分报告: V5_STRICT_REVIEW_AND_SCORING.md
+仅提交三件套（你说的“只交两个 notebook + AI log”）: submit_only
+打包文件: CE310_Final_Submission_v5_20260302_042405.zip
+我做了什么复查
+
+两个你下载的包都解压并跑通了（optimized_full / optimized_minimal，Part1+Part2 全通过）。
+基于 minimal 迭代成 v5，再次全量执行通过（Part1/Part2 nbconvert --execute 均 PASS）。
+核验了关键雷点：
+seaborn 依赖炸点已规避（matplotlib-only）。
+Task7 协议检查存在（>=10 runs、50 generations、history.csv 一致性断言）。
+4.1 结构满足“markdown-before-code + 分步测试”。
+我额外优化了：
+notebook 文本中潜在乱码字符（改为 ASCII 安全表达）。
+Task4/Task7 解释深度文字（更像严谨人工报告）。
+AI_log.docx 去模板占位路径、改成更可提交英文版，模型标注 gpt5.2。
+最严苛评分预估（按你给的 4.1~4.10）
+
+任务项本体估计：约 93.5/100
+若 4.1/4.2 扣分较轻：总评约 90~96
+若老师认可当前 AI log 证据形式：约 94~97
+主要剩余风险仍是 4.2（个别老师要求“完整原始对话逐条粘贴”会更严）。
+你现在直接上传的话，优先用 submit_only 里的三件套；如果担心老师本地重跑，就交整个 v5 压缩包。
+
+
+你觉得这个版本跟我们之前的版本有什么区别？他这个更好吗？你审查一下对比一下。
+
+
+上 4 条消息
+我按你“之前版本”= 最终提交版_推荐上传 做了对比，同时也对了 CE310_Final_Submission_Optimized_MINIMAL 和 CE310_Final_Submission_v5。
+
+结论：是，更好。v5 最稳，提交风险最低。
+
+运行稳定性
+
+三个版本本机都能跑通（Part1+Part2）。
+但之前版有 seaborn 依赖：见 Part2.ipynb、Part2.ipynb。
+optimized_minimal/v5 已改成 matplotlib-only，跨环境更稳：见 Part2.ipynb。
+评分点 4.9（Task7 协议证据）
+
+之前版主要只检查 n_runs>=10：见 Part2.ipynb。
+新版增加了硬校验：history.csv 数量、每 run 必须 51 行（gen0..50）、last_gen=50，证据更强：见 Part2.ipynb、Part2.ipynb。
+评分点 4.6/4.9 的文字论证深度
+
+v5 对 Task4 局部最优证据、Task7 ideal/variability 解释更完整，老师读起来更像“证据驱动”，不是只看图。
+关键段落在 Part1.ipynb、Part2.ipynb、Part2.ipynb。
+AI log 可提交性
+
+之前版有模板痕迹（如 [fill before upload]）。
+v5 已整理成提交版英文、模型标注 gpt5.2，路径占位更少：见 AI_log.docx。
+结果是否变了
+
+核验了关键 CSV（Task3/4/7/8），三版哈希一致，实验结果没变，变化主要是“稳健性+表达+合规证据链”。
+建议你现在提交：
+
+三件套： submit_only
+或完整可重跑包： CE310_Final_Submission_v5 / CE310_Final_Submission_v5_20260302_042405.zip
+如果你说的“之前版本”不是 最终提交版_推荐上传，我可以按你指定目录再做一轮一模一样的对比。
+
+
+E:\CE310\out请你将要提交的放在这个文件夹下以后，然后如果是什么不同版本，你就放在不同的子文件夹内，用中文标注清楚，然后记得及时更新。
+
+
+上 6 条消息
+好的，已按你说的处理为“只看一个最终版本”。
+
+请直接用这个目录提交：
+
+00_只提交这个_最终提交_最新最全_v5
+我也放了一个提示文件：
+
+请只提交这个目录.txt
+这个最终目录里已确认包含：
+
+Part1.ipynb
+Part2.ipynb
+AI_log.docx
+ce310/
+results/
+figures/
+后续我会继续按你这个规则，把新版本都放到 E:\CE310\out 并用中文子文件夹标清楚。
+
+
+我收到了这个邮件，请根据老师给的信息，把我们最终的那个版本再优化。然后我今天给同学看了两个代码笔记本，他说可能文字描述部分有些少，你稍微再填充一点点，稍微补充描述一下。这样可能就是更稳妥一点。然后把每一个任务点细化，就是每一步细化清楚。搞清楚。然后把每个任务点计划的好一点，体现清楚，也说清楚。然后尽量不要去删除我们现有的一些成果，然后在此基础上你做增量做微调，迭代出更好的v6版本。用最严苛的角度去评审最严苛的角度去。嗯参照打分表去以及我们的课程描述课程内容和lecture的PPT和所有的PDF你全部都理解透，全部都便利重新看一遍。具体看CE310 coursework 2026.pdf，CE310 coursework 2026.extracted.txt以及所有其他的文本文件和pdf文件。然后请你清理一下，嗯最老的一些版本的文件夹（没有用的重复和重复的文件夹，但是可以每个版本留存一版本备份），保证我们最终提交版本只在 out那个文件夹里面，别搞得这么乱。Dear all, 
+
+Both issues are minor.
+
+FIRST ISSUE:
+Where the brief says:
+
+3.3 Task 7 – Experiments and Analysis of Results
+
+You are asked to perform a series of GP runs and describe the results of your runs in a
+
+report. In your experiments you will need to use GP in different configurations (i.e.,
+
+problems and parameters).[MY BOLDFACE]
+
+
+I meant to write “describe your results in your notebook”. 
+
+As detailed in: 
+
+1.4 Submission
+
+Please submit all your work as a single zip file on FASER by the above deadline. Inside
+
+the zip file, put:
+
+1. a Jupyter notebook with your Part 1 work,
+
+2. a Jupyter notebook with your Part 2 work,
+
+3. if AIs were used, also include the AI Log in the form of a Word document.
+
+
+
+No separate report for the results is required (only the AI Log if you used AIs). However, if you have already written a report where you discuss the results, no problem: just submit that too on FASER with the rest.
+
+
+SECOND ISSUE:
+The brief says:
+
+3.1 Task 5 – Representation and Genetic Operators
+
+Pick the GA which you feel worked best in Part 1.
+
+Assume that our GP primitive set only includes a very small number of instructions:
+
+• NOP: that does nothing,
+
+• +: which adds up two values and returns their sum,
+
+• -: which subtracts two values and returns their difference,
+
+• *: which multiplies two values and returns their product,
+
+• X: which returns the input value to the program,
+
+• 1: which returns the constant 1,
+
+• -1: which returns the constant -1, and
+
+• 0: which returns the constant 0.
+
+So, in total we have 8 instructions.
+
+While the code in the “execute" function I provide in the following page is:
+# Main execution loop
+
+for instr in program:
+
+if instr == 0: # NOP
+
+      pass
+
+elif instr == 1: # X
+
+      stack.append(x)
+
+elif instr == 2: # +
+
+      stack.append(pop() + pop())
+
+elif instr == 3: # -
+
+      stack.append(pop() - pop())
+
+elif instr == 4: # *
+
+      stack.append(pop() * pop())
+
+elif instr == 5: # 1
+
+      stack.append(1)
+
+elif instr == 6: # -1   
+
+stack.append(-1)
+
+else: # 0
+
+      stack.append(0)
+
+So, the primitive are ordered differently in the two elements: NOP, +, -, *, X, 1, -1, 0 in the the text and NOP, X, +, -, *, 1, -1, 0 in the code. 
+This is unimportant. Whatever convention you have used in your code will fine by me.
+
+Many thanks
+Riccardo
+-- 
+
+Prof Riccardo Poli              
+https://www.essex.ac.uk/people/polir15101/riccardo-poli
+
+E-mail: rpoli@essex.ac.uk   
+
+Zoom: https://essex-university.zoom.us/my/rpoli
+
+Address:  
+School of Computer Science and
+Electronic Engineering
+University of Essex
+Wivenhoe Park      
+Colchester CO4 3SQ, UK
+
+Reconnecting... 1/5
+Reconnecting... 2/5
+Reconnecting... 3/5
+Reconnecting... 4/5
+Reconnecting... 5/5
+unexpected status 402 Payment Required: {"detail":{"code":"deactivated_workspace"}}, url: https://chatgpt.com/backend-api/codex/responses, cf-ray: 9d6a879f0e193c70-LHR, request id: 44788a54-c583-4262-81b2-c3fad48932b4

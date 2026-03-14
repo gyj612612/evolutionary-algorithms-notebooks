@@ -1,0 +1,365 @@
+FILE: CE310-2026-Lecture-07.pdf
+PAGES: 40
+
+
+===== PAGE 1 =====
+[CE310]
+Evolutionary Computation 
+and Genetic Programming
+Riccardo Poli
+Bloat in GP
+
+
+===== PAGE 2 =====
+What did we learn last time ? (1)
+•We learned that different program execution strategies exist 
+focusing on interpretation.
+•We have seen that interpreting a program tree means recursively
+traversing the tree and executing nodes when their arguments are 
+known. 
+•We have learned that there are problems with non -functional
+instructions and that we need macros , which have unevaluated 
+arguments as their input.
+2
+
+===== PAGE 3 =====
+What did we learn today? (2)
+•XO with tree -like programs requires swapping of sub -trees, 
+mutation requires replacing a sub -tree with a new random one.
+•Programs can also be composed of multiple trees , each 
+representing a different component of the program. 
+•This can be used to define subroutines (ADFs) that may reduce
+the complexity and increase generality and understandability of 
+solutions.
+3
+
+===== PAGE 4 =====
+This week’s learning objectives
+•Describe bloat
+•Describe different theories that explain “ why bloathappens?”
+and discuss them.
+•Explain approaches to control bloat
+4
+
+===== PAGE 5 =====
+What’s bloat?
+Bloat = Growth in program size (variable length representation) 
+without significant return in terms of fitness .
+5FitnessSize
+t
+McPhee & Miller (1995), McPhee & Poli (2001) 
+
+===== PAGE 6 =====
+Does it continue forever?
+6
+Average behaviour Single run
+
+===== PAGE 7 =====
+Artificial ant problem (Santa Fe trail)
+7
+
+
+===== PAGE 8 =====
+Artificial ant problem (Santa Fe trail)
+Langdon & Poli (1998)   
+Santa Fe trail problem: https://www.youtube.com/watch?v=BKF7pGw8qbY
+8
+
+
+===== PAGE 9 =====
+Fitnes
+sAnt Problem: Mean Fitness vs Generations
+910 20 30 40 50
+Generations90
+45
+
+===== PAGE 10 =====
+SizeFitnes
+sAnt Problem: Mean Program Size vs Gen.
+1010 20 30 40 50
+Generations90
+45500
+250Size limit
+
+===== PAGE 11 =====
+Bloat -Why does it happen?
+•Bloat has been thoroughly investigated for decades  
+•(Too) many theories propose to explain it.
+•So,  for some people bloat is still a mystery.
+11
+
+===== PAGE 12 =====
+GP Search Space
+12
+Double logarithmic scale
+Exponentials
+
+===== PAGE 13 =====
+Limiting distribution
+•Empirically and theoretically, it has been shown that as program 
+length grows the distribution of functionality reaches a limit
+13
+
+===== PAGE 14 =====
+{d0,d1,NAND} search space
+14Proportion of 2 -input logic functions 
+implemented using NAND primitives
+
+===== PAGE 15 =====
+Search spaces
+•Proportion of Ant programs 
+with each score•Error Distribution Sextic
+Polynomial Problem (x6+…)
+15
+
+
+===== PAGE 16 =====
+Nature of program search spaces theory
+•Above a certain size,  the distribution of fitness does not vary 
+with size .
+•Since there are more long programs , the number of long  
+programs of a given fitness is greater than the number of short  
+programs of the same fitness.
+•Thus, over time GP samples longer  and longer programs simply 
+because there are more of them.
+16
+
+===== PAGE 17 =====
+Active vs Inactive Code
+•Most code in bloated programs is inactive , e.g.
+•a* 0 = 0 however big the expression for ais
+•IF( 0, b, c) = cwhatever bis
+•When a fitprogram is changed , it produces unfit offspring most
+of the time .
+•Active code is like “ icing on the cake ”
+17
+
+===== PAGE 18 =====
+Replication accuracy theory
+•The success of a GP individual  depends on its ability to have 
+offspring that are functionally similar to the parent.
+•So, GP evolves towards (bloated)  representations that 
+increase replication accuracy .
+18
+
+===== PAGE 19 =====
+Removal bias theory
+•Inactive code in a GP tree is low in the tree, forming smaller -
+than -average -size subtrees .
+•Crossover events excising inactive subtrees produce offspring 
+with the same fitness as their parents.
+•On average the inserted subtree isbigger than the excised one, 
+so such offspring are bigger than average.
+19
+
+===== PAGE 20 =====
+More evidence: No Fitness = No Bloat
+20SizeFitnes
+s
+10 20 30 40 50
+Generations90
+45500
+250
+
+===== PAGE 21 =====
+SizeGenerationProportion 
+of programsJust XO, no fitness!Crossover Bias
+21
+
+===== PAGE 22 =====
+Can fitness override the XO bias?
+22fitness
+size
+SizeGenerationProportion 
+of programs
+
+===== PAGE 23 =====
+Crossover Bias Theory of Bloat
+•Crossover does not change the mean program size , on average, 
+but…
+•It creates a population with a large proportion of small 
+programs .
+•In most problems, very small programs are unfit , so they are 
+ignored by selection. Thus…
+•Only larger programs will be picked as parents , hence …
+•Mean program size increases .
+23
+
+===== PAGE 24 =====
+Size Evolution (1)
+•The mean size of the programs in the current generation is 
+𝜇𝑔=1
+𝑁෍
+𝑖=1𝑁
+𝑠𝑖
+with N number of programs
+•However, if we group programs by size:
+𝝁𝒈=𝟏×𝚽𝟏+𝟐×𝚽𝟐+⋯=σ𝐬×𝚽𝒔
+with 𝚽𝒔= proportion of programs of size sin the population
+24
+
+===== PAGE 25 =====
+Size Evolution (2)
+•Instead of creating a new generation g+1 by selection and crossover, 
+we split this into two steps: 
+1.we create a new generation just by selection and duplication, and
+2.create a further generation by applying crossover (randomly selecting 
+parents from the first). 
+•After (1), the mean program size will be 
+𝝁𝒔𝒆𝒍=𝟏×𝐩𝟏+𝟐×𝐩𝟐+⋯
+where p(s) = probability of selecting a program of size sfrom the population
+•On average, crossover on its own takes away as much as it puts in .
+•So going from (1) to (2) we should not see any changes in mean 
+program size. That is 
+𝝁𝐠+𝟏=𝝁𝒔𝒆𝒍=𝟏×𝐩𝟏+𝟐×𝐩𝟐+⋯
+25
+
+===== PAGE 26 =====
+Conditions for Growth
+•Growth/bloat can happen only if
+𝐄𝝁𝐠+𝟏−𝝁𝒈=1∙𝑝1−Φ1+2∙𝑝2−Φ2+⋯+N∙𝑝N−ΦN>𝟎
+•So, there must be:
+•some short programs for which 𝒑𝒔<𝜱𝒔or
+•some longer ones for which 𝒑𝒔>𝜱𝒔(or both, at least on average).
+•For years, the focus was on why are longer programs were preferred?
+(𝒑𝒔>𝜱𝒔for big 𝒔)
+•The crossover bias theory (and my experiments with Nic McPhee) showed that the 
+culprit was the short/bad programs!
+(𝒑𝒔<𝜱𝒔for small 𝒔) 
+26
+
+===== PAGE 27 =====
+Main techniques for limiting code bloat: Size 
+limits
+•Fixed size or depth limit : Programs exceeding the limit are 
+discarded and a parent is kept instead.
+•This is very dangerous as it gives a fitness advantage to programs 
+that tend to violate the constraint.
+•Trying crossover again or giving 0 fitness to programs above the 
+threshold is a better way to do it
+27
+
+===== PAGE 28 =====
+Main techniques for limiting code bloat: 
+Modifying operators
+•Modification of operators : variation of the selection probability of 
+crossover points by using explicitly defined introns, rejection of 
+destructive crossover events, size -fair operators, multi -objective 
+optimization (MOO) techniques, etc.
+•For example, point mutation (applied with a fixed probability per 
+node) has an anti bloat effect.
+28
+
+===== PAGE 29 =====
+Main techniques for limiting code bloat: 
+Acting on Selection
+•Size evolution equation shows that to prevent growth one needs
+•To decrease the selection probability  for  bigger than average programs
+•To increase the selection probability  for below -average -size programs
+•Or both
+29
+
+===== PAGE 30 =====
+Bloat Control with Fitness Holes
+•If one can create artificial fitness holes in areas of the search 
+space which we want to avoid, then evolution will try to stay away 
+from those areas.
+30
+
+===== PAGE 31 =====
+Parsimony Pressure Method
+•A term is added to the fitness function that penalises larger 
+programs.  Typically:
+fparsimony(prog) = fraw(prog)–c*size(prog)
+where cis a constant ( parsimony coefficient )
+•An alternative
+fparsimony(prog) = fraw(prog)+c/size(prog)
+31
+
+===== PAGE 32 =====
+Tarpeian bloat control
+•The basic Tarpeian method decreases the selection probability of  
+longer -than -average programs, but it does it for some random 
+individuals in the set and for some of the time
+•Tarpeian fitness -wrapper
+IF (size(program) > average_pop_size ) AND (rand_num < ptarp) THEN
+return( very_low_fitness );
+ELSE
+return( fitness(program) );
+•The Tarpeian method  creates fitness holes  dynamically and 
+non -deterministically (only for larger -than -average programs).
+32
+
+===== PAGE 33 =====
+Why “Tarpeian”?
+33
+
+
+===== PAGE 34 =====
+Features of the Tarpeian Method (1)
+•The wrapper does not evaluate the individuals killed, so  
+computation is saved not wasted.
+•If enough better -than -average longer -than -average individuals are 
+produced, the average program size  grows. That is, the algorithm  
+allows growth as long as it is associated to fitness 
+improvements .
+34
+
+===== PAGE 35 =====
+Features of the Tarpeian Method (2)
+•If the average program size increases, the fitness hole moves so 
+as to discourage further growth.
+•The parameter ptarpdetermines the intensity of the repulsive  force 
+exerted by the fitness hole.
+•The pressure to shrink does not change with program size .
+35
+
+===== PAGE 36 =====
+Hot Air Balloon Metaphor
+36
+
+===== PAGE 37 =====
+Covariant parsimony pressure
+•Parsimony pressure method 
+𝑓𝑝=𝑓−𝑐∙s
+•Size evolution equation can be rewritten as:
+𝐸∆𝜇=𝐶𝑜𝑣𝑓,𝑠−𝑐∙𝑉𝑎𝑟(𝑠)
+ҧ𝑓−𝑐∙𝜇
+•If we want no growth, then we can set the right -hand side to 0. 
+Solving for c gives
+c=𝐶𝑜𝑣(𝑓,𝑠)
+𝑉𝑎𝑟(𝑠)
+37
+
+===== PAGE 38 =====
+What did we learn? (1)
+•We have learned that bloat is the growth in program size
+(variable length representation) without significant return in 
+terms of fitness .
+•Replication accuracy theory: GPs evolve bloated 
+representations that are functionally like the parents.
+•Removal bias theory: crossover inserts subtrees that on average 
+are bigger than excised ones
+•Crossover bias theory: Crossover creates many small and unfit 
+programs.
+38
+
+===== PAGE 39 =====
+What did we learn? (2)
+•Growth can only occur when the selection probability of short
+programs is lower than average and of long programs is higher
+than average.
+•Limit bloat by using a fixed size or depth limit or modifying the 
+genetic operators
+•Prevent bloat by adding a penalty term to the fitness ( parsimony
+pressure ) or by dynamically and non -deterministically creating 
+fitness holes ( Tarpeian )
+39
+
+===== PAGE 40 =====
+[CE310]
+Evolutionary Computation 
+and Genetic Programming
+Riccardo Poli
+….
+

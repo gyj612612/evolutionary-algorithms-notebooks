@@ -1,0 +1,12 @@
+{
+  "condition": "7bit_problem1",
+  "n_runs": 5,
+  "best_of_run_mean": 42.4,
+  "best_of_run_std": 15.05988047761336,
+  "final_best_mean": 42.4,
+  "final_best_std": 15.05988047761336,
+  "mean_execute_calls_per_generation": 415.2156862745098,
+  "mean_execute_calls_nominal_per_generation": 600.0,
+  "execute_call_reduction_ratio": 0.3079738562091504,
+  "mean_duplicate_ratio_per_generation": 0.30797385620915035
+}

@@ -1,0 +1,27 @@
+# Python and notebook caches
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local editor and OS files
+.DS_Store
+Thumbs.db
+
+# Generated outputs and archives
+out/
+backups/
+tmp/
+*.zip
+
+# Large local media files
+*.mp3
+
+# Optional local reports/log bundles that should not block pushes
+reports/

@@ -1,0 +1,10 @@
+{
+  "condition": "onemax_L100",
+  "n_runs": 10,
+  "best_of_run_mean": 97.9,
+  "best_of_run_std": 1.3703203194062976,
+  "final_best_mean": 97.9,
+  "final_best_std": 1.3703203194062976,
+  "ideal_found_fraction": 0.2,
+  "first_ideal_generation_mean": 46.5
+}

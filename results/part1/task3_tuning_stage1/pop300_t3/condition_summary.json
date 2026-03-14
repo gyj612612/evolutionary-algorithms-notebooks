@@ -1,0 +1,10 @@
+{
+  "condition": "pop300_t3",
+  "n_runs": 5,
+  "best_of_run_mean": 26.2,
+  "best_of_run_std": 0.8366600265340756,
+  "final_best_mean": 26.2,
+  "final_best_std": 0.8366600265340756,
+  "ideal_found_fraction": 0.0,
+  "first_ideal_generation_mean": null
+}

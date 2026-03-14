@@ -1,0 +1,226 @@
+FILE: CE310-2026-Lecture-04.pdf
+PAGES: 24
+
+
+===== PAGE 1 =====
+[CE310]
+Evolutionary Computation 
+and Genetic Programming
+Riccardo Poli
+Evolution strategies
+
+===== PAGE 2 =====
+Post Lab Addendum
+
+===== PAGE 3 =====
+Binary Steady State GA on OneMax  function
+
+
+===== PAGE 4 =====
+Binary Steady State GA on deceptive/trap function
+
+
+===== PAGE 5 =====
+Binary Steady State GA on deceptive/trap function
+
+
+===== PAGE 6 =====
+Binary Steady State GA on deceptive/trap function
+
+
+===== PAGE 7 =====
+Today’s learning objective
+•Describe evolution  strategies  (ESs) algorithm and possible ways 
+to implement them.
+•Discuss and contrast evolution  strategies  (EAs) and genetic  
+algorithms  (GAs)
+7
+
+===== PAGE 8 =====
+Evolution Strategies
+•An Evolution Strategy (ES) is EAs which uses arrays of real 
+numbers as a representation, like real -valued GAs.
+•Mutation  is the key variation operator (unlike GAs, where 
+recombination is usually deemed to play that role)
+•Mutation  = addition of Gaussian random numbers  to the floats 
+that represent the individuals being optimised.
+•The amplitude of deviates is varied dynamically  to maximise 
+performance (but often ESs are also used with fixed mutation).
+8
+
+===== PAGE 9 =====
+Gaussian Mutation
+•Same implementation as mutation in real -valued GAs:
+Offspring 𝑃𝑎𝑟𝑎𝑚1=Parent 𝑃𝑎𝑟𝑎𝑚1+sigma∙𝑅1
+…
+Offspring 𝑃𝑎𝑟𝑎𝑚𝑁=Parent 𝑃𝑎𝑟𝑎𝑚𝑁+sigma∙𝑅𝑁
+but
+R1, ..., RN = random numbers drawn from a  standardised 
+Gaussian distribution
+9
+
+===== PAGE 10 =====
+Gaussian Mutation
+Offspring [1]=Parent[1]+sigma∙R1
+Offspring [𝑁]=Parent[N]+sigma∙R𝑁
+where:
+•sigma  is a suitable positive constant and 
+•R1, ..., RN are (different) random numbers drawn from a 
+normal/gaussian  distribution
+•In python: 
+import random
+Ri = random.gauss (0, sigma)
+10
+…Same implementation as 
+mutation in real -valued GAs but 
+the Ri are NOT uniformly 
+distributed
+
+===== PAGE 11 =====
+Standardised Gaussian Deviates
+11Modified from https://en.wikipedia.org/wiki/Normal_distributionDeviateRiProbability of 
+Deviate
+
+===== PAGE 12 =====
+(1+1) ES
+•The ( 1+1 ) ES uses a population consisting of only one individual 
+(the first “1” in “( 1+1)”).
+•The parent generates one offspring (the second “1” in “(1+ 1)”) per 
+generation by applying Gaussian mutations.
+•If offspring performs no worse than its parent, it replaces it.
+12
+
+===== PAGE 13 =====
+Sample 2 -D Fitness Landscape
+13High
+LowFitness function 𝑓𝑥,𝑦 seen as a topographic map 
+(contour lines connect points of equal elevation)
+
+===== PAGE 14 =====
+(1+1) -ES Behaviour
+14
+123
+456
+78
+
+===== PAGE 15 =====
+(1+lambda), ( mu+lambda ) and ( mu,lambda ) 
+ES
+•(1+lambda ) ES is like the (1+1) ES except it generates lambda 
+offspring and it chooses the best as a candidate for replacing the 
+parent.
+•(mu+lambda ) ES produces lambda offspring at each generation 
+via crossover and mutation . The best mu individuals out of the 
+lambda + mu available ones are retained.
+•(mu, lambda ) ES is like ( mu+lambda ) ES but it the replaces the 
+parents with the best mu offspring out of lambda generated 
+(naturally, lambda > mu for this to work).
+15
+
+===== PAGE 16 =====
+(1,2) ES
+1612
+2334
+4
+Numbers 
+represent 
+generations
+
+
+===== PAGE 17 =====
+(1,4) ES
+1712
+22233
+3
+34
+44
+4
+
+===== PAGE 18 =====
+(2,4) ES
+1812
+1
+222
+333
+344
+4
+4
+
+===== PAGE 19 =====
+Which ES is best?
+•It might seem that (1,4) and (2,4) ES are best .
+•However, more offspring means more fitness evaluations, i.e., 
+longer runtimes
+•So, fair comparison should be done on approximately same 
+number of fitness evaluations
+19Our example ES Fitness 
+evaluations
+1+1 8
+1,2 7
+1,4 13
+2,4 14
+
+===== PAGE 20 =====
+(1,2) ES run extended to 13 fitness 
+evaluations
+2012
+2334
+4 55
+667
+7
+•This is the best this time, but the 
+fitness function is unimodal  (only 
+one peak/max).
+•For multi -modal  fitness functions 
+one needs more individuals 
+(mu>1) in the parent pool and 
+more offspring (lambda>2)
+
+===== PAGE 21 =====
+Which value of sigma  to use? (1)
+•Big sigma  means children 
+will be further away from the 
+parents.
+•Initially this may lead to 
+bigger improvements in 
+fitness
+•However, the closer the 
+population gets to the 
+optimum the harder it gets 
+to home on it.
+21
+
+===== PAGE 22 =====
+Which value of sigma  to use? (2)
+•Small  sigma  means children 
+will be closer to the parents.
+•Initially this may lead to 
+smaller improvements in 
+fitness
+•However, the closer the 
+population gets to the 
+optimum it is easier to home 
+on it.
+22
+
+===== PAGE 23 =====
+Sigma Adaptation and 1/5 Rule
+•This issue is addressed by the 1/5 rule, where sigma  is changed 
+according to the frequency of successful mutations
+•We define  
+ smut = fraction of times children are fitter than parents
+•If smut > 1/5 ➔ increase sigma
+    # we’re exploring too little, e.g., on a gentle slope
+•If smut < 1/5 ➔ decrease sigma
+    # we’re exploring too widely, e.g., near the optimum
+•If smut = 1/5 ➔ do nothing           # we’re exploring just right! 
+23
+
+===== PAGE 24 =====
+[CE310]
+Evolutionary Computation 
+and Genetic Programming
+Riccardo Poli
+Next week: 
+Genetic Programming
+

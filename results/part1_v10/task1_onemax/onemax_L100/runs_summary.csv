@@ -1,0 +1,11 @@
+condition,run,seed,final_best_fitness,final_mean_fitness,best_of_run_fitness,ideal_found,first_ideal_generation
+onemax_L100,0,10000,98.0,97.23,98.0,0,-1
+onemax_L100,1,10001,97.0,95.66,97.0,0,-1
+onemax_L100,2,10002,99.0,97.96,99.0,0,-1
+onemax_L100,3,10003,97.0,96.765,97.0,0,-1
+onemax_L100,4,10004,97.0,96.475,97.0,0,-1
+onemax_L100,5,10005,100.0,99.79,100.0,1,43
+onemax_L100,6,10006,96.0,95.615,96.0,0,-1
+onemax_L100,7,10007,97.0,95.31,97.0,0,-1
+onemax_L100,8,10008,98.0,96.67,98.0,0,-1
+onemax_L100,9,10009,100.0,98.465,100.0,1,50

@@ -1,0 +1,14 @@
+{
+  "condition": "problem2_3bit_pop200_t5",
+  "n_runs": 10,
+  "best_of_run_mean": -67.28068400000002,
+  "best_of_run_std": 26.95868136315903,
+  "final_best_mean": -69.47902400000001,
+  "final_best_std": 25.912264743776028,
+  "mean_execute_calls_per_generation": 1486.9647058823527,
+  "mean_execute_calls_nominal_per_generation": 4200.0,
+  "execute_call_reduction_ratio": 0.6459607843137256,
+  "mean_duplicate_ratio_per_generation": 0.6459607843137254,
+  "ideal_found_fraction": 0.0,
+  "first_ideal_generation_mean": null
+}

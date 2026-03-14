@@ -1,0 +1,725 @@
+FILE: CE310-2026-Lecture-01.pdf
+PAGES: 67
+
+
+===== PAGE 1 =====
+[CE310]
+Evolutionary Computation 
+and Genetic Programming
+Riccardo Poli
+1. Introduction, motivation, 
+metaheuristics, module structure and 
+some evolution in nature
+
+
+===== PAGE 2 =====
+Outline
+•Hands -on experience: hints for knapsack problem 
+•Why do we need evolutionary computation and genetic 
+programming?
+•What is in the module and how will it be run?
+•How does natural evolution work?
+2
+
+===== PAGE 3 =====
+Outline
+•Who is your module supervisor?
+•Why do we need evolutionary computation and genetic 
+programming?
+•How will the model be run? (Introduction to CE310)
+•Evolution in nature
+3
+
+===== PAGE 4 =====
+Module supervisor
+Riccardo Poli
+•Professor in Computer Science
+•Expert in Evolutionary 
+Computation and Genetic 
+Programming
+•Co-founder and former co -director 
+Essex BCI -NE lab
+Email : rpoli@essex.ac.uk
+Office: 1NW.5.3B
+4
+
+===== PAGE 5 =====
+Three decades of experience in EAs and GP
+•First publication on EAs/GP 1993
+•Involved in many EA/GP conferences and 
+journals in the past
+•ISGEC Fellow (2003), EvoStar award (2007) and 
+ACM SigEvo award (2023).
+•Fourth (out of 19,000+) most prolific author in 
+GP worldwide (253 articles, 113 first author)
+•2002 first book on the theory of GP (with B. 
+Langdon)
+•2008 field guide to GP book (with B. Langdon, N. 
+McPhee and J. Koza,one of the most cited books 
+in GP). Free!!
+•Recently evolving better learning rules for neural 
+networks using GP and completing the book 
+“Taming the Complexity of Evolutionary 
+Dynamics” (with C. Stephens)
+5
+
+
+===== PAGE 6 =====
+Outline
+•Who is your module supervisor?
+•Why do we need evolutionary computation and genetic 
+programming?
+•How will the module be run? ( Introduction to CE310 )
+•How does natural evolution work?
+6
+
+===== PAGE 7 =====
+Let’s start with an example: Relocation
+•Problem 1: Which of your things go 
+in which box so that you have as 
+few boxes as possible?
+•Boxes are expensive, so with fewer 
+boxes you save money
+•Also, if you need to send the boxes 
+via currier, fewer boxes →cheaper 
+delivery
+7Picture from https://www.apartmentshere.com/top -10-moving -tips/
+
+
+===== PAGE 8 =====
+Problem 1: Bin Packing Problem (idealized, 1 -D)
+•Given are Nitems of different sizes siwith i=1...N and B bins 
+(boxes) each of capacity c . 
+•Goal is to assign each item to a bin such that the total number 
+bins is minimised . Let’s assume that all items have sizes si<= c .
+•Why relevant? Applications include loading goods in shipping 
+containers, warehouse storage, placing files on multiple disks, 
+timetabling, …
+8
+
+===== PAGE 9 =====
+9
+Example Problem 1
+Which items go in which bin (box) ?
+
+
+===== PAGE 10 =====
+10
+Example Problem 1: Intuitive solution (1)
+
+
+===== PAGE 11 =====
+11
+Example Problem 1: Intuitive solution (2)
+A
+BCD
+FE G
+ABDEF
+CG
+
+
+===== PAGE 12 =====
+12Example Problem 1: Intuitive solution (3)
+ABDEF
+CG
+A B D
+ E FC G
+•So, if we put the items ABCDEFG in bins one at a time in the order ABDEFCG
+we end up using only 3 bins out of 4
+
+===== PAGE 13 =====
+13Example Problem 1: Intuitive solution (4)
+ABCDE
+FG•ABDEFCG is called a permutation of ABCDEFG
+(permutation=reshuffling)
+•Had we chosen the original order ABCDEFG, we would have used all 4 bins
+•But how do we know the optimal order/permutation?
+•A ”brute -force” approach to solve the problem: Test all permutations!ABC DE F G
+
+
+===== PAGE 14 =====
+How many permutations are there? (1)
+•Suppose we have 3 items to place in boxes: A, Band C
+•There are three ways of placing A: 
+Acan be first ( A_ _), second (_ A_), or third (_ _ A). 
+•For every placement of A, we only have two ways available for placing B. 
+E.g., (A B_) and (A _ B).
+•Once both Aand Bare placed, there is only one slot left for C, 
+irrespective of where I placed Aand B. 
+•So, in total there are 3 x 2 x 1 = 6 = 3! ways of permuting A, B and C: 
+ABC, ACB, BAC, BCA, CAB and CBA
+14
+
+
+===== PAGE 15 =====
+•In general, the number of permutations of nelements is
+𝑃𝑛=𝑛!
+•In our example bin packing problem, we have n=7
+𝑃7=7!=1∙2∙3∙4∙5∙6∙7=5,040
+15How many permutations are there? (2)
+
+===== PAGE 16 =====
+Combinatorial Optimization
+•Problem 1 is a combinatorial optimisation problem . 
+•Combinatorial Optimization is concerned with finding an optimal
+or close to optimal solution among a finite collection of 
+possibilities
+•Applications: Logistics, Travel route, Timetabling, Disk 
+partitioning, Hyper -parameter selection for AI/ML, …
+16
+
+===== PAGE 17 =====
+Another combinatorial optimisation 
+problem: relocation example 2
+•Problem 2: Your things have 
+different values, and you cannot fit 
+them all in your car. Which items
+should you take with you in the first 
+trip to your new home?
+•You want to load the car with as many 
+of the most valuable items as possible 
+17Picture from https://d2y7gcw37cyxhu.cloudfront.net/images/layout/cat_home/cat_umzugstransporter.jpg
+
+===== PAGE 18 =====
+Problem 2: Knapsack (Rucksack) problem
+•Problem you face if you are constrained by a fixed -size knapsack 
+and must fill it with the most valuable items. 
+•Given a set of items (i=1...N), each with a size (si) and a value (vi), 
+determine which items to include in the knapsack so that the total 
+size is less than or equal to a given limit (Smax) and the total 
+value is as large as possible (maximize vtot). 
+For more info see https://en.wikipedia.org/wiki/Knapsack_problem
+18
+
+===== PAGE 19 =====
+Computational complexity theory
+•What is the computational complexity (amount of time needed to run) 
+of the developed solution?
+•Testing allpermutations leads to the optimal solution, but the time 
+required may be too high! 
+•The number of operations required grows at least exponentially O(en) 
+with size of input n (e= 2.718..)
+n!=1∙2∙3∙4∙5∙6∙7…>1∙2∙𝑒∙𝑒∙𝑒∙𝑒∙𝑒∙… 
+n!=1∙2∙3∙4∙5∙6∙7∙8∙9∙10∙11∙12…>1∙2∙3∙4∙5∙6∙7∙8∙9∙10∙10∙10∙10∙10∙… 
+•This is the NP ( Nondeterministic Polynomial) time complexity class. 
+Most combinatorial optimisation problems are NP!
+•The exponential growth in possible solutions = combinatorial explosion
+•So, what can we do? 19
+
+===== PAGE 20 =====
+Meta -heuristic stochastic optimization 
+•Heuristic (from Greek heuriskein = to search): 
+Approximate strategies (rules of thumb) or partial search 
+algorithm which are problem specific .
+•Metaheuristic (metá = beyond): Higher -level, more 
+general procedure designed to find, generate, or select a 
+heuristic that may provide a sufficiently good solution to 
+an optimization problem, with an acceptable 
+computation load
+•Stochastic : Randomly determined process
+•EAs and GP are highly successful meta -heuristics 
+suitable for combinatorial optimization .20
+
+===== PAGE 21 =====
+Questions?
+21
+
+===== PAGE 22 =====
+What have we learnt so far today?
+•We have learned about combinatorial optimisation 
+problems (Bin Packing problem & Knapsack problem) 
+•We have seen that exact/complete algorithms can be 
+computationally complex (especially intuitive 
+solutions). 
+•Consequently, such algorithms may not be a viable 
+solution to real -world problems, and we need alternatives 
+(meta -heuristics). 
+22
+
+===== PAGE 23 =====
+Outline
+•Hands -on experience: hints for knapsack problem
+•Why do we need evolutionary computation and genetic 
+programming?
+•What is in the module and how will it be run?
+•How does natural evolution work?
+23
+
+===== PAGE 24 =====
+What is in the module and how will it be run?
+•The module is all about optimisation and problem solving , so we 
+are in the AI domain
+•Elements in this section:
+•What is Evolutionary Computation ?
+•What is Genetic Programming ?
+•Course description, outcomes, assessment
+•Sources of information (including online)
+24
+
+===== PAGE 25 =====
+Evolutionary Computation
+•Evolutionary Computation is a branch of Computer 
+Science that studies and applies evolutionary 
+algorithms (EAs )
+•EAs are optimization and search procedures inspired 
+by natural evolution . 
+•Depending on the structures undergoing optimization, 
+the reproduction strategies and the genetic
+operations EAs can be grouped into: Genetic 
+Algorithms (GAs), Evolution Strategies (ESs), 
+Genetic Programming (GP), ....25
+
+===== PAGE 26 =====
+Evolutionary Algorithms
+•EAs are systematic methods inspired by Darwinian evolution for 
+getting computers to automatically solve problems starting 
+from a high -level statement of what needs to be done
+•EAs are often domain -independent methods (i.e., they can be 
+applied to a variety of domains with relatively little effort) →Need 
+to only slightly adjust code
+•GAs and ESs are different flavours of EA which act on linear 
+representations (arrays) (e.g. problems 1 & 2)
+26
+
+===== PAGE 27 =====
+Genetic Programming
+•Genetic Programming (GP) is a class of EAs for solving problems 
+which require solutions in the form of computer programs .
+•GP genetically breeds a population of computer programs to solve 
+a problem.
+•EAs and GP iteratively transform a population of random solutions 
+into new generations of better and better solutions.
+27
+
+===== PAGE 28 =====
+Genetic Programming
+•EAs and GP apply analogues of genetic operations like survival of 
+the fittest, sexual recombination, mutation, etc.
+28
+
+
+===== PAGE 29 =====
+Course Description
+•The course starts with a primer on natural evolution 
+(today!) and introducing the basics of evolutionary 
+algorithms (ESs and GAs, in the next 2 -3 weeks).
+•Then we move onto the basics of Genetic Programming 
+(GP) later studying some of GP's more advanced variants.
+•We touch upon other nature -inspired metaheuristics, 
+such as Particle Swarm Optimisers (PSOs)
+•Part of the course is also devoted to presenting real -world 
+applications of EAs and GP .
+…all accompanied by hands -on experience in the classes.
+29
+
+===== PAGE 30 =====
+Learning Outcomes (1)
+After completing this module, you can:
+•Discuss Evolutionary Algorithms and their relationships.
+•Describe Genetic Programming and its relationship with other 
+Evolutionary Algorithms.
+30
+
+===== PAGE 31 =====
+Learning Outcomes (2)
+After completing this module, you can :
+•Compare application domains for GP and associate these with 
+good GP techniques.
+•Identify GP parameters and modify existing GP operators, 
+representations and fitness functions for specific applications.
+31
+
+===== PAGE 32 =====
+Syllabus (1)
+•Evolution in Nature
+•Genetic Algorithms
+•Evolution Strategies
+•The basics of GP
+•Fitness functions in GP
+•Advanced Representations
+•Code growth and methods to control it
+32
+
+===== PAGE 33 =====
+Syllabus (2)
+•Applications of GP
+•Koza's criteria for human -competitive machine intelligence and 
+review of GP's human -competitive results
+•Advanced GP techniques and tricks of the trade
+•Some other nature -inspired metaheuristics.
+33
+
+===== PAGE 34 =====
+Delivery
+•Normally, two hours of lectures per week to cover main body of 
+the course and one hour class per week for formative exercises, 
+problem solving, interactive coding, etc.
+•Learning by doing : To gain insight into the functioning of the 
+methods you are expected to code core components yourself
+and experiment with the methods outside of the lecture/class 
+(spend 8hours per week on the Module)
+34
+
+===== PAGE 35 =====
+Assessment
+•60% Examination
+•40% Assignments (out around week 18 with deadline in week 23, see FASER) 
+Components:
+1. Code and/or run EAs in Python to solve optimisation problems →50%
+2. Code and or run simulations to investigate the impact of GP parameters on performance →50%
+3. Possibly post -submission elements to verify understanding of code and experimental results
+35
+
+===== PAGE 36 =====
+Academic integrity, authorship and 
+plagiarism
+•Plagiarism : “the act of using another person's words or 
+ideas without giving credit to that person”
+[https://www.merriam -webster.com/dictionary/plagiarism ]
+•Intentional, reckless, or unintentional? Note that intentional or 
+reckless plagiarism is a disciplinary offence
+•Please discuss the solutions to tasks among 
+yourselves. But have the ambition to implement the 
+solution yourself.
+•Questions? Please check 
+https://www.essex.ac.uk/student/academic -skills/academic -
+integrity36
+
+===== PAGE 37 =====
+Coursework help from AIs [work in progress]
+•If you use AIs to help you with the coursework, you must make sure you can 
+answer any questions I may have on the code or analysis .
+•AIs tend to produce the same or similar answers over and over again and, so,       
+AI-generated code tends to be flagged up by our plagiarism detection system for 
+code .
+•Protocol (v1) if you want to get help from AIs in producing the coursework:
+1. Keep a log of the steps below and submit it with the coursework
+2. Ask the AI to first produce the smallest possible fragment of code that gets you started, 
+3. Make sure this does not only run but you fully understand it, e.g., you would be able to 
+modify it by hand if required.
+2.1 if it is correct proceed to step 4, 
+2.2 else fix any issues yourself (preferred) or ask the AI to fix (ok but make sure you fully understand the fix). 
+2.3 If you cannot fully understand the code, you  asked the AI to do too big a job. Ask for less.
+4. Ask the AI to do a minimal extension of the code that will take you closer to where it needs 
+to be and repeat step 3 until you are satisfied.
+37
+
+===== PAGE 38 =====
+Sources of Information: Main source
+•Lectures and classes. Slides, videos, code and handouts 
+available on Moodle
+•R. Poli, W.B. Langdon, N.F . McPhee. A field guide to Genetic 
+Programming , 2008. 
+•Free PDF http://www.gp -field -guide.org.uk/
+38
+
+===== PAGE 39 =====
+Sources of Information: Background
+•S. Luke, Essentials of Metaheuristics , Lulu, Second edition, 
+2013. 
+•Freely available as a PDF from here
+•W.B. Langdon, R. Poli , Foundations of Genetic Programming, 
+Springer, 2002.
+39Start with 
+this book
+
+===== PAGE 40 =====
+Other On -line Resources (1)
+•The Wikipedia (Evolutionary Algorithms) is a good starting 
+point for online reading
+•http://en.wikipedia.org/wiki/Evolutionary_algorithms
+•A complete bibliography on genetic programming 
+maintained by Bill Langdon at 
+•https://gpbib.cs.ucl.ac.uk/
+40
+
+===== PAGE 41 =====
+Other On -line Resources (2)
+•Use AIs to ask questions on genetic programming and  
+evolutionary algorithms
+•Google Scholar http://scholar.google.com
+365k hits for “genetic programming”, 613k hits for 
+“evolutionary algorithms” and 2.1M hits for “genetic 
+algorithm”
+41
+
+===== PAGE 42 =====
+Questions on the module?
+42
+
+===== PAGE 43 =====
+Outline
+•Hands -on experience: hints for knapsack problem
+•Why do we need evolutionary computation and genetic 
+programming?
+•What is in the module and how will it be run?
+•How does natural evolution work?
+43
+
+===== PAGE 44 =====
+Darwin's Theory of Evolution
+•Charles Robert Darwin (1809 -1882)
+•1859: On the origin of species …
+•Variations (mutations ) are present in all species
+•Evolution is due to a “force” called natural selection which 
+“selects” the individuals best adapted to the environment
+•In a constant environment no changes occur as variants will tend 
+to lose in the struggle for life. So, species preserve their identity.
+•In a varying environment , however, some variants will be better 
+than the originals and will be preserved. Species evolve in this 
+way.
+44
+
+===== PAGE 45 =====
+Mendel's independent discoveries
+•Gregor Johann Mendel (1822 -1884)
+•1865: Versuche über Pflanzenhybriden [Experiments on Plant 
+Hybridization]
+•Factors, what we now call genes /alleles , determine visible traits
+in predictable ways
+•Dominant and recessive characters
+45
+
+===== PAGE 46 =====
+Example: pea colour
+46 https:// www.futurelearn.com /info/courses/genomics -for-educators/0/steps/305264?
+?YY                                            yy
+Yy Yy
+YY            Yy Yy yy
+
+===== PAGE 47 =====
+How natural selection works
+•Individuals of a population that are fitter tend to survive 
+for longer and reproduce
+•Their characteristics, encoded in their genes, are 
+transmitted to their offspring and, thus, tend to propagate 
+into future generations
+•In sexual reproduction, the genes of the offspring are a 
+mix of those of their parents.
+•Offspring's characteristics are partially inherited from 
+their parents, and partially the result of new genes 
+created during the process of reproduction.
+47
+
+===== PAGE 48 =====
+Natural selection does not quite mean ” the 
+survival of the fittest ”
+•“Fittest” means “best adapted ”, not “in the best condition ”
+•“Best adapted ” means “best adapted with respect to a niche” (a 
+relevant sub -set of the environment)
+•“Length of life ” does not mean “fertility”
+•“Fertility” does not mean “successful reproduction ” (i.e., 
+production of offspring who live long enough to reproduce 
+themselves)
+48
+
+===== PAGE 49 =====
+The cell
+•Cells are surrounded by a thin oily 
+membrane
+•The membrane has a voltage of about 
+100 mV across caused by different  
+concentrations of ions inside and outside
+•Cells include a nucleus
+•The nucleus includes several 
+chromosomes (“coloured bodies ”)
+•In diploid cells, chromosomes are paired 
+(homologous chromosomes), the two 
+elements of a pair carrying similar 
+information
+•Chromosomes are made up of DNA
+(deoxyribonucleic acid)49Membrane
+
+===== PAGE 50 =====
+DNA (1) 
+•DNA is made up of bases and 
+other molecules
+•DNA bases are: 
+•A(adenine)
+•T (thymine)
+•C(cytosine) and 
+•G(guanine)
+•These molecules are 
+organised to form a double 
+helix (spiral -shaped ladder)
+50
+https://siteman.wustl.edu/wp -content/uploads/ncipdq -media/CDR0000761781.jpg
+
+===== PAGE 51 =====
+DNA (2)
+•DNA is a long description (a book) whose “characters ” are T, G, C, A 
+(about 3 billion bases in humans)
+•The “words” of the DNA include three bases ( triplets or codons ) 
+and represent amino -acids (building blocks of proteins)
+e.g., TCT=Serine, CAA=Glutamine, TAA=Stop
+•A gene is represented by a “sentence ”  (a meaningful sequence of 
+triplets) in the DNA
+•Some triplets represent stop symbols (the end of a sentence)
+51
+
+===== PAGE 52 =====
+Also start symbol
+52Genetic code (1)
+
+===== PAGE 53 =====
+Genetic code (2)
+•Most genes (sentences in the DNA) code for proteins (structural
+genes, i.e., trait determining factors)
+E.g., haemoglobin →
+•Some segments of the DNA have regulatory purposes, i.e., they 
+bind to specific sequences in the DNA and control which genes to 
+turn on or off under any particular conditions .
+•Other genes have no function (introns, ”junk DNA ”)or we do not 
+understand their function yet.
+53
+
+
+===== PAGE 54 =====
+Genetic code (3)
+•A gene can be represented by a number of slightly different 
+sequences called alleles .
+•Gene is a portion of the DNA that determines a trait
+•Allele express the characteristics (e.g., hair colour)
+•Each homologous chromosome may have a different allele for each 
+gene (remember the peas example)
+•Approximately speaking, alleles are dominant if they produce
+much more (and sufficient) protein than their recessive 
+counterparts.
+54
+
+===== PAGE 55 =====
+Genetic code (4)
+•Central dogma of molecular biology ( DNA as blueprint ):
+•DNA replicates to produce more DNA ( DNA→DNA )
+•DNA is transcribed into ribonucleic acid ( RNA ) which is 
+translated into proteins (DNA→RNA→Protein )
+•During these processes DNA can undergo mutations
+•Copy error ( 10-10nucleotides)
+•Induced due to exposure to chemicals, UV, X -rays, … 
+(external influences)
+•Spontaneous due to reactions within organism
+55
+
+===== PAGE 56 =====
+Type of mutations
+•Substitution : Exchange one base for another
+•Condon (triplet) encodes a different amino acid, the 
+same amino acid or STOP (incomplete proteins)
+•Insertion : Extra base pair inserted
+•Deletion : Section of DNA lost or deleted
+•Frameshift : Insertions/deletions can alter a gene so that 
+message is no longer correctly parsed.
+Example: The fat cat sat →hef atc ats at
+•… 
+•Mutation can be beneficial , neutral , or harmful ! 56
+
+===== PAGE 57 =====
+Summary of main properties of DNA
+•It stores and transmits information
+•It copies itself (mainly) to generate proteins but 
+also to transmit information
+•It can mutate
+57
+
+===== PAGE 58 =====
+Meiosis –Reproduction (1)
+58Shyamala Iyer. (2014, February 03). Cell Division. ASU -Ask A Biologist. Retrieved January 8, 
+2020 from https://askabiologist.asu.edu/cell -division
+In meiosis (preparation of egg and sperm cells) homologous
+chromosomes duplicate ( 46→92) (cyan=maternal, red=paternal)
+
+===== PAGE 59 =====
+Meiosis –Reproduction (2)
+59Shyamala Iyer. (2014, February 03). Cell Division. ASU -Ask A Biologist. Retrieved January 8, 
+2020 from https://askabiologist.asu.edu/cell -division
+Because of close proximity , they can become entangled, resulting 
+in chromosomes that are a mixture of maternal and paternal genes 
+(“crossover " or " genetic recombination ”)
+
+===== PAGE 60 =====
+Meiosis –Reproduction (3)
+60Shyamala Iyer. (2014, February 03). Cell Division. ASU -Ask A Biologist. Retrieved January 8, 
+2020 from https://askabiologist.asu.edu/cell -division•The cell then divides twice so that only one of the 
+homologous chromosomes of a pair is present in the 
+resulting cells (sperm or eggs).
+
+
+===== PAGE 61 =====
+Mating and Growth
+•Mating produces ( diploid ) cells that start duplicating ( mitosis )
+•Duplication involves chromosome copying and cell division ( no
+crossover ). Mutations can occur during the copying phase.
+•The process of growth transforms the information in the genes 
+(genotype ) into an adult individual ( phenotype ).
+•Growth is controlled mainly by the environment (but also by genetic 
+factors)
+•During the development of an individual cells specialise
+(differentiation) and migrate
+61
+
+===== PAGE 62 =====
+Cell differentiation
+•Wait: all cells have exactly the same DNA! So, how do we get 
+skin cells, neurons, muscle cells, …?
+•Cell differentiation happens thanks to the regulation ofgene
+expression determined by environment surrounding the cell
+•Regulation is performed by tracts of DNA that function as 
+switches for groups of genes.
+62
+By Haileyfournier -Own work, CC BY -SA 4.0, 
+https://commons.wikimedia.org/w/index.php?curid=79600426
+
+===== PAGE 63 =====
+Questions?
+63
+
+===== PAGE 64 =====
+What did we learn today? (1)
+•We have learned that combinatorial optimisation 
+problems (Knapsack problem & Bin Packing problem) can 
+be solved with meta -heuristic stochastic optimisation 
+methods such as Evolutionary Algorithms . 
+•In this module we will learn about EAs and work with 
+them as tools to solve different types of (continuous and 
+combinatorial) optimisation problems.
+•EAs can also be used a form of machine learning: 
+program induction ( Genetic Programming )
+•We also learned what is required in terms of assessment.
+64
+
+===== PAGE 65 =====
+What did we learn today? (2)
+•Natural selection means individuals in a population that 
+are fitter with respect to their environment produce more 
+offspring. The trait that made those individuals succeed 
+becomes common in the population.
+•Genes encode the various traits of an individual. All traits 
+of an individual are combined in a long linear 
+representation (1-D array) (DNA).
+•Genetic recombination (crossover) , i.e., the exchange of 
+genetic material to create offspring's that are different 
+than the parents, and random mutations drive evolution.
+65
+
+===== PAGE 66 =====
+Don’t forget to …
+…catch -up with Python coding if necessary in preparation for the 
+lab this Friday.
+Resources:
+•Python ( https://www.python.org/ )
+•Jupyter Lab ( https://jupyter.org/ )
+•Anaconda ( https://www.anaconda.com/ )
+•Google Colab (https://colab.research.google.com )
+•VirtualLab (https://csee -horizon.essex.ac.uk/ )
+66
+
+===== PAGE 67 =====
+[CE 310 ]
+Evolutionary Computation 
+and Genetic Programming
+Riccardo Poli
+Thanks for your participation!
+Next time: 
+Translating natural 
+evolution into algorithms
+

@@ -1,0 +1,10 @@
+{
+  "condition": "pc0.20_pmop0.20_pbf1.00",
+  "n_runs": 3,
+  "best_of_run_mean": 27.0,
+  "best_of_run_std": 2.6457513110645907,
+  "final_best_mean": 27.0,
+  "final_best_std": 2.6457513110645907,
+  "ideal_found_fraction": 0.3333333333333333,
+  "first_ideal_generation_mean": 49.0
+}

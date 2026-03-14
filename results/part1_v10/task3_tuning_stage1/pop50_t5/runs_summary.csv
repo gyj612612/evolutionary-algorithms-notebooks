@@ -1,0 +1,6 @@
+condition,run,seed,final_best_fitness,final_mean_fitness,best_of_run_fitness,ideal_found,first_ideal_generation
+pop50_t5,0,11200,16.0,15.94,16.0,0,-1
+pop50_t5,1,11201,13.0,12.92,13.0,0,-1
+pop50_t5,2,11202,15.0,14.88,15.0,0,-1
+pop50_t5,3,11203,14.0,13.96,14.0,0,-1
+pop50_t5,4,11204,13.0,12.36,13.0,0,-1

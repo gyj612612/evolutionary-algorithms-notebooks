@@ -1,0 +1,14 @@
+{
+  "condition": "3bit_problem2",
+  "n_runs": 10,
+  "best_of_run_mean": -61.692944000000026,
+  "best_of_run_std": 27.33015398931258,
+  "final_best_mean": -65.11018000000001,
+  "final_best_std": 29.38665710231092,
+  "mean_execute_calls_per_generation": 2990.070588235294,
+  "mean_execute_calls_nominal_per_generation": 4200.0,
+  "execute_call_reduction_ratio": 0.28807843137254907,
+  "mean_duplicate_ratio_per_generation": 0.288078431372549,
+  "ideal_found_fraction": 0.0,
+  "first_ideal_generation_mean": null
+}
