@@ -1,4 +1,0 @@
-condition,run,seed,final_best_fitness,final_mean_fitness,best_of_run_fitness,ideal_found,first_ideal_generation
-pc0.30_pmop0.10_pbf1.00,0,13900,26.0,25.9,26.0,0,-1
-pc0.30_pmop0.10_pbf1.00,1,13901,22.0,21.205,22.0,0,-1
-pc0.30_pmop0.10_pbf1.00,2,13902,26.0,25.905,26.0,0,-1

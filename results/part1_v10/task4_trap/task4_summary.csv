@@ -1,5 +1,0 @@
-condition,encoding,L,objective,deceptive_local_optimum,global_optimum,n_runs,best_of_run_mean,best_of_run_std,final_best_mean,final_best_std,ideal_found_fraction,first_ideal_generation_mean
-15bit_L10_soft15trap_int,15bit,10,soft15trap_int,14.0,15.0,10,12.959999999999999,0.21186998109427607,12.940000000000001,0.21705094128132948,0.0,
-15bit_L30_soft15trap_int,15bit,30,soft15trap_int,14.0,15.0,10,10.433333333333334,0.14740554623801766,10.423333333333336,0.15559523303498032,0.0,
-4bit_L10_soft15trap_int,4bit,10,soft15trap_int,14.0,15.0,10,14.76,0.09660917830793007,14.76,0.09660917830793007,0.0,
-4bit_L30_soft15trap_int,4bit,30,soft15trap_int,14.0,15.0,10,14.179999999999998,0.1156836896428479,14.176666666666666,0.11444983806060544,0.0,

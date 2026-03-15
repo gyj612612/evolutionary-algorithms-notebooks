@@ -1,6 +1,0 @@
-condition,run,seed,final_best_fitness,final_mean_fitness,best_of_run_fitness,ideal_found,first_ideal_generation
-pop100_t2,0,11300,22.0,21.98,22.0,0,-1
-pop100_t2,1,11301,23.0,22.03,23.0,0,-1
-pop100_t2,2,11302,18.0,17.93,18.0,0,-1
-pop100_t2,3,11303,22.0,21.03,22.0,0,-1
-pop100_t2,4,11304,23.0,22.87,23.0,0,-1
